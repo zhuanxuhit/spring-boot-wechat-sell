@@ -1,0 +1,16 @@
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+#  path: /Users/zhuanxu/IdeaProjects/spring-learn/log
+#  level:
+#    com.babyfs.LogTest: debug
+#  file: /Users/zhuanxu/IdeaProjects/spring-learn/log/
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:33060/spring-boot-e-commerce?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
