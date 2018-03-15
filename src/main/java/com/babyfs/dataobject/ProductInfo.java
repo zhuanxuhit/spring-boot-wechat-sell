@@ -1,6 +1,7 @@
 package com.babyfs.dataobject;
 
 import com.babyfs.enums.ProductStatusEnum;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
+@Data
 public class ProductInfo {
     @Id
     private String productId;
