@@ -1,6 +1,11 @@
 package com.babyfs.VO;
 
-public class ResultVO<T> {
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
+public class ResultVO<T>{
     /** 错误码 */
     private Integer code;
     /** 错误信息 */
