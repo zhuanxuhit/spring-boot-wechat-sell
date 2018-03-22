@@ -1,6 +1,7 @@
 package com.babyfs.service.impl;
 
 import com.babyfs.dataobject.ProductInfo;
+import com.babyfs.dto.CartDTO;
 import com.babyfs.enums.ProductStatusEnum;
 import com.babyfs.enums.ResultEnum;
 import com.babyfs.exception.SellException;
@@ -50,6 +51,41 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductInfo offSale(String productId) {
         return setProductStatus(productId, ProductStatusEnum.DOWN);
+    }
+
+    @Override
+    @Transactional
+    public void decreaseStock(List<CartDTO> cartDTOList) {
+        // 针对每个productId，减少库存
+        for (CartDTO cartDTO :
+                cartDTOList) {
+            Optional<ProductInfo> optionalProductInfo = findOne(cartDTO.getProductId());
+            if (!optionalProductInfo.isPresent()){
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXI);
+            }
+            ProductInfo productInfo = optionalProductInfo.get();
+            Integer num = productInfo.getProductStock() - cartDTO.getProductQuantity();
+            if (num<0){
+                throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
+            }
+            productInfo.setProductStock(num);
+            repository.save(productInfo);
+        }
+    }
+    @Override
+    @Transactional
+    public void increaseStock(List<CartDTO> cartDTOList) {
+        for (CartDTO cartDTO : cartDTOList) {
+            Optional<ProductInfo> optionalProductInfo = findOne(cartDTO.getProductId());
+            if (!optionalProductInfo.isPresent()){
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXI);
+            }
+            ProductInfo productInfo = optionalProductInfo.get();
+            Integer resultNum = productInfo.getProductStock() + cartDTO.getProductQuantity();
+            productInfo.setProductStock(resultNum);
+            repository.save(productInfo);
+        }
+
     }
 
     private ProductInfo setProductStatus(String productId, ProductStatusEnum status){
