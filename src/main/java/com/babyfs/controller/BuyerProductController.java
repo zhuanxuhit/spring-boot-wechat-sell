@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -50,7 +49,7 @@ public class BuyerProductController {
                     productInfoList) {
                 if (Objects.equals(info.getCategoryType(), category.getCategoryType())){
                     ProductInfoVO productInfoVO = new ProductInfoVO();
-//                    productInfoVO.setProductId(info.getProductId());
+//                    pr oductInfoVO.setProductId(info.getProductId());
 //                    productInfoVO.setProductDescription(info.getProductDescription());
 //                    productInfoVO.setProductIcon(info.getProductIcon());
 //                    productInfoVO.setProductName(info.getProductName());
