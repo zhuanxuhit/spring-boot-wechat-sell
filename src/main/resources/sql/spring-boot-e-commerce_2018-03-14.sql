@@ -36,8 +36,8 @@ CREATE TABLE `order_detail` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`detail_id`),
-  KEY `idx_order_id` (`order_id`),
-  CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order_master` (`order_id`)
+  KEY `idx_order_id` (`order_id`)
+--   CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order_master` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

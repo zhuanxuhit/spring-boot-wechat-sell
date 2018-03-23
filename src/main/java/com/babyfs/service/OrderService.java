@@ -4,6 +4,8 @@ import com.babyfs.dto.OrderDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author 颛顼
  * @Description:
@@ -13,7 +15,7 @@ public interface OrderService {
     /**
      * 创建订单.
      */
-    OrderDTO create(OrderDTO orderDTO);
+    @NotNull OrderDTO create(OrderDTO orderDTO);
 
     /**
      * 查询单个订单.

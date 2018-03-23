@@ -72,11 +72,12 @@ public class OrderServiceImpl implements OrderService {
         }
         // 3. 写入订单数据（主订单，）
         OrderMaster orderMaster = new OrderMaster();
+        BeanUtils.copyProperties(orderDTO, orderMaster);
+        // 注意此处 setOrderId 操作应该放在 copyProperties 之后，不然会被设置为null
         orderMaster.setOrderId(orderId);
         orderMaster.setOrderAmount(orderAmount);
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
         orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
-        BeanUtils.copyProperties(orderDTO, orderMaster);
         orderMasterRepository.save(orderMaster);
         // 4. 扣库存
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(
@@ -84,6 +85,8 @@ public class OrderServiceImpl implements OrderService {
         ).collect(Collectors.toList());
 
         productService.decreaseStock(cartDTOList);
+        // 重新将值赋值回去，例如最重要的 Order_id,orderAmount
+        BeanUtils.copyProperties(orderMaster, orderDTO);
         return orderDTO;
     }
 
