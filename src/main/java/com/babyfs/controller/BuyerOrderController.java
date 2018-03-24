@@ -6,6 +6,7 @@ import com.babyfs.dto.OrderDTO;
 import com.babyfs.enums.ResultEnum;
 import com.babyfs.exception.SellException;
 import com.babyfs.form.OrderForm;
+import com.babyfs.service.BuyerService;
 import com.babyfs.service.OrderService;
 import com.babyfs.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +30,15 @@ import java.util.Map;
 public class BuyerOrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private BuyerService buyerService;
 
-    // 创建订单
+    /**
+     * 创建订单
+     * @param orderForm
+     * @param bindingResult
+     * @return Map<String, String>
+     */
     @PostMapping("/create")
     public ResultVO create(@Valid OrderForm orderForm, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
@@ -68,7 +76,32 @@ public class BuyerOrderController {
         Page<OrderDTO> orderDTOList = orderService.findList(openid, request);
         return ResultVOUtil.success(orderDTOList.getContent());
     }
-    // 订单详情
+    /**
+     * 订单详情
+     * @param openid 18eu2jwk2kse3r42e2e
+     * @param orderId 161899085773669363
+     * @return
+     */
+    @GetMapping("/detail")
+    public ResultVO detail(@RequestParam("openid") String openid,
+                           @RequestParam("orderId") String orderId){
+        if (StringUtils.isEmpty(openid) || StringUtils.isEmpty(orderId)) {
+            log.error("【查询订单详情】openid or orderId 为空");
+            throw new SellException(ResultEnum.PARAM_ERROR);
+        }
+        OrderDTO orderDTO =  buyerService.findOrderOne(openid,orderId);
+        return ResultVOUtil.success(orderDTO);
+    }
 
     // 取消订单
+    @GetMapping("/cancel")
+    public ResultVO cancel(@RequestParam("openid") String openid,
+                           @RequestParam("orderId") String orderId){
+        if (StringUtils.isEmpty(openid) || StringUtils.isEmpty(orderId)) {
+            log.error("【取消订单】openid or orderId 为空");
+            throw new SellException(ResultEnum.PARAM_ERROR);
+        }
+        buyerService.cancelOrder(openid,orderId);
+        return ResultVOUtil.success();
+    }
 }

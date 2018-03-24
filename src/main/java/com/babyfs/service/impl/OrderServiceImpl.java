@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
         OrderDTO orderDTO = new OrderDTO();
         Optional<OrderMaster> optionalOrderMaster = orderMasterRepository.findById(orderId);
         if (!optionalOrderMaster.isPresent()) {
-            throw new SellException(ResultEnum.PRODUCT_NOT_EXI);
+            throw new SellException(ResultEnum.ORDER_NOT_EX);
         }
         // 设置detail
         List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(orderId);
