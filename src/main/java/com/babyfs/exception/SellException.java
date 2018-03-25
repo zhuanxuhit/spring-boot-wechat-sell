@@ -1,6 +1,7 @@
 package com.babyfs.exception;
 
 import com.babyfs.enums.ResultEnum;
+import lombok.Data;
 
 public class SellException extends RuntimeException{
     private Integer code;

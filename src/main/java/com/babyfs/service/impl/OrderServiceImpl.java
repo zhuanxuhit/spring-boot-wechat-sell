@@ -13,6 +13,7 @@ import com.babyfs.exception.SellException;
 import com.babyfs.repository.OrderDetailRepository;
 import com.babyfs.repository.OrderMasterRepository;
 import com.babyfs.service.OrderService;
+import com.babyfs.service.PayService;
 import com.babyfs.service.ProductService;
 import com.babyfs.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private OrderMasterRepository orderMasterRepository;
+    @Autowired
+    private PayService payService;
 
     @Override
     @Transactional
@@ -149,8 +152,8 @@ public class OrderServiceImpl implements OrderService {
         ).collect(Collectors.toList());
         productService.increaseStock(cartDTOList);
         //支付成功退款
-        if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS)) {
-//            payService.refund(orderDTO);
+        if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())) {
+            payService.refund(orderDTO);
         }
         return orderDTO;
     }

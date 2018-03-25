@@ -21,3 +21,14 @@ server:
   servlet:
     context-path: /sell
   port: 8080
+
+wechat:
+  mp-app-id: wx4f0e062447a23768
+  mp-app-secret: 7a49998ad835911360c0d8fcad8d4ee9
+  mch-id: 1483469312
+  mch-key: C5245D70627C1F8E9964D494B0735025
+  key-path: /Users/zhuanxu/IdeaProjects/babyfs/sell/src/main/resources/h5.p12
+
+project-url:
+  wechat-mp-authorize: http://test.zhuanxuhit.cn/sell
+  wechat-open-authorize: http://test.zhuanxuhit.cn/sell
